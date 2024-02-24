@@ -285,6 +285,134 @@
       `;
 
       document.head.appendChild(styleElement);
+
+      const PERSON_IMG =
+        "https://cdn-icons-png.flaticon.com/512/2815/2815428.png";
+      const PERSON_NAME = "XavierLopez25";
+
+      let lastMessageId = 0;
+
+      function appendMessageIfNew(message) {
+        if (message.id > lastMessageId) {
+          const side = message.username === "XavierLopez25" ? "right" : "left";
+          appendMessage(message.username, PERSON_IMG, side, message.message);
+          lastMessageId = message.id;
+        }
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const msgText = input.value;
+        if (!msgText) return;
+
+        const simulatedMessage = {
+          id: lastMessageId + 1,
+          username: "XavierLopez25",
+          message: msgText,
+          time: new Date(),
+        };
+
+        appendMessage(
+          simulatedMessage.username,
+          PERSON_IMG,
+          "right",
+          simulatedMessage.message
+        );
+
+        lastMessageId = simulatedMessage.id;
+
+        input.value = "";
+
+        await postMessageAndRefreshList(msgText);
+      });
+
+      async function getMessages() {
+        try {
+          const atBottom =
+            form.scrollHeight - form.clientHeight <= form.scrollTop + 1;
+          const response = await fetch("http://chat.tiburoncin.lat/messages");
+          const messages = await response.json();
+          messages.reverse().forEach(appendMessageIfNew);
+          if (atBottom) {
+            form.scrollTop = form.scrollHeight;
+          }
+        } catch (error) {
+          console.error("Failed to fetch messages:", error);
+        }
+      }
+
+      async function postMessageAndRefreshList(msgText) {
+        const body = { username: "XavierLopez25", message: msgText };
+        const postResponse = await fetch(
+          "http://chat.tiburoncin.lat/messages",
+          {
+            method: "POST",
+            body: JSON.stringify(body),
+          }
+        );
+      }
+
+      function get(selector, root = document) {
+        return root.querySelector(selector);
+      }
+
+      function formatDate(date) {
+        const h = "0" + date.getHours();
+        const m = "0" + date.getMinutes();
+
+        return `${h.slice(-2)}:${m.slice(-2)}`;
+      }
+
+      function appendMessage(name, img, side, text, time = new Date()) {
+        const msgHTML = `
+    <div class="msg ${side}-msg message-enter">
+      <div class="msg-img" style="background-image: url(${img})"></div>
+
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">${name}</div>
+          <div class="msg-info-time">${formatDate(time)}</div>
+        </div>
+
+        <div class="msg-text">${text}</div>
+      </div>
+    </div>
+  `;
+
+        msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+        scrollToEnd();
+      }
+
+      function scrollToEnd() {
+        msgerChat.scrollTop = msgerChat.scrollHeight;
+      }
+
+      showLoadingIndicator();
+      getMessages();
+      hideLoadingIndicator();
+
+      applyDarkModePreference();
+
+      setInterval(() => {
+        getMessages();
+      }, 5000);
+
+      function showLoadingIndicator() {
+        const loadingText = document.createElement("div");
+        loadingText.id = "loadingIndicator";
+        loadingText.textContent = "Loading messages...";
+        loadingText.style.textAlign = "center";
+        msgerChat.innerHTML = "";
+        msgerChat.appendChild(loadingText);
+      }
+
+      function hideLoadingIndicator() {
+        const loadingIndicator = document.getElementById("loadingIndicator");
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+      }
     </script>
   </body>
 </html>
