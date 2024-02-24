@@ -14,6 +14,35 @@
       const darkModeToggle = document.createElement("span");
       const icon = document.createElement("i");
       const icon2 = document.createElement("i");
+
+      section.className = "msger";
+      header.className = "msger-header";
+      msgerChat.className = "msger-chat";
+      form.className = "msger-inputarea";
+      input.className = "msger-input";
+      input.maxLength = 140;
+      input.setAttribute("type", "text");
+      input.setAttribute("placeholder", "Enter your message...");
+      charCount.className = "char-count";
+      charCount.textContent = "140";
+      sendBtn.className = "msger-send-btn";
+      sendBtn.textContent = "Send";
+      darkModeToggle.id = "darkModeToggle";
+      darkModeToggle.className = "DModeToggle";
+      icon.className = "fas fa-sun";
+      icon2.className = "fas fa-moon";
+
+      darkModeToggle.appendChild(icon);
+      darkModeToggle.appendChild(icon2);
+      header.appendChild(darkModeToggle);
+      form.appendChild(input);
+      form.appendChild(charCount);
+      form.appendChild(sendBtn);
+      section.appendChild(header);
+      section.appendChild(msgerChat);
+      section.appendChild(form);
+      main.appendChild(section);
+      body.appendChild(main);
     </script>
   </body>
 </html>
