@@ -291,6 +291,7 @@
       const PERSON_NAME = "XavierLopez25";
 
       let lastMessageId = 0;
+      let remaining = 140;
 
       function appendMessageIfNew(message) {
         if (message.id > lastMessageId) {
@@ -323,6 +324,10 @@
         lastMessageId = simulatedMessage.id;
 
         input.value = "";
+
+        remaining = 140;
+        charCount.textContent = remaining;
+        charCount.style.color = "black";
 
         await postMessageAndRefreshList(msgText);
       });
@@ -436,7 +441,7 @@
       }
 
       input.addEventListener("input", function () {
-        const remaining = 140 - this.value.length;
+        remaining = 140 - this.value.length;
         charCount.textContent = remaining;
 
         if (remaining === 0) {
