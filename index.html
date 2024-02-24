@@ -43,6 +43,248 @@
       section.appendChild(form);
       main.appendChild(section);
       body.appendChild(main);
+
+      const scriptFontAwesome = document.createElement("script");
+      scriptFontAwesome.src =
+        "https://use.fontawesome.com/releases/v5.0.13/js/all.js";
+      document.head.appendChild(scriptFontAwesome);
+
+      const styleElement = document.createElement("style");
+
+      styleElement.innerHTML = `
+      
+        :root {
+          --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+          --msger-bg: #fff;
+          --border: 2px solid #ddd;
+          --left-msg-bg: #ececec;
+          --right-msg-bg: #579ffb;
+        }
+
+        body,
+        html {
+          height: 100%;
+          margin: 0;
+        }
+
+        html {
+          box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+          margin: 0;
+          padding: 0;
+          box-sizing: inherit;
+        }
+
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background-image: var(--body-bg);
+          font-family: Helvetica, sans-serif;
+        }
+
+        .DModeToggle svg:last-child {
+          display: none;
+        }
+
+
+        .DModeToggle svg:first-child {
+          display: block;
+        }
+
+        .DModeToggle.dark-mode-button svg:last-child {
+          display: block;
+        }
+
+
+        .DModeToggle.dark-mode-button svg:first-child {
+          display: none;
+        }
+
+    
+
+        .msger {
+          display: flex;
+          flex-flow: column wrap;
+          justify-content: space-between;
+          width: 100%;
+          max-width: 867px;
+          margin: 25px 10px;
+          height: calc(100% - 50px);
+          border: var(--border);
+          border-radius: 5px;
+          background: var(--msger-bg);
+          box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .msger-header {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          border-bottom: var(--border);
+          background: #eee;
+          color: #666;
+        }
+
+        .msger-chat {
+          flex: 1;
+          overflow-y: auto;
+          padding: 10px;
+        }
+        .msger-chat::-webkit-scrollbar {
+          width: 6px;
+        }
+        .msger-chat::-webkit-scrollbar-track {
+          background: #ddd;
+        }
+        .msger-chat::-webkit-scrollbar-thumb {
+          background: #bdbdbd;
+        }
+        .msg {
+          display: flex;
+          align-items: flex-end;
+          margin-bottom: 10px;
+        }
+        .msg:last-of-type {
+          margin: 0;
+        }
+        .msg-img {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+          background: #ddd;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          border-radius: 50%;
+        }
+        .msg-bubble {
+          max-width: 450px;
+          padding: 15px;
+          border-radius: 15px;
+          background: var(--left-msg-bg);
+        }
+        .msg-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        .msg-info-name {
+          margin-right: 10px;
+          font-weight: bold;
+        }
+        .msg-info-time {
+          font-size: 0.85em;
+        }
+
+        .left-msg .msg-bubble {
+          border-bottom-left-radius: 0;
+          word-break: break-word;
+        }
+
+        .right-msg {
+          flex-direction: row-reverse;
+          word-break: break-word;
+        }
+
+        .right-msg .msg-bubble {
+          background: var(--right-msg-bg);
+          color: #fff;
+          border-bottom-right-radius: 0;
+        }
+        .right-msg .msg-img {
+          margin: 0 0 0 10px;
+        }
+        
+
+        .msger-inputarea {
+          display: flex;
+          padding: 10px;
+          border-top: var(--border);
+          background: #eee;
+        }
+        .msger-inputarea * {
+          padding: 10px;
+          border: none;
+          border-radius: 3px;
+          font-size: 1em;
+        }
+        .msger-input {
+          flex: 1;
+          background: #ddd;
+        }
+        .msger-send-btn {
+          margin-left: 10px;
+          background: #00c496;
+          color: #fff;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.23s;
+        }
+        .msger-send-btn:hover {
+          background: #029e79;
+        }
+
+        .msger-chat {
+          flex: 1;
+          overflow-y: auto;
+          padding: 10px;
+          max-height: 70vh;
+          min-height: 757px; /* Adjust this value based on your design needs */
+          min-width: 554px;
+          background-color: #fcfcfe;
+          background-image: url( "https://img.freepik.com/premium-vector/seamless-pattern-with-social-media-networking-global-internet-communication-chatting-instant-messaging-symbols-white-background-vector-illustration-line-art-style-wallpaper_198278-7649.jpg?w=740");
+        }
+
+
+        body.dark-mode .msger-chat {
+          background-image: url("https://brunty.me/files/chat-bgs/1.0/blue-pink-100-pct.png"); /* Set your dark mode image path here */
+        } 
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .message-enter {
+          animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .dark-mode {
+          --body-bg: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+          --msger-bg: #333;
+          --border: 2px solid #555;
+          --left-msg-bg: #222;
+          --right-msg-bg: #0a84ff;
+          color: #fff;
+        }
+
+        .msger-inputarea {
+          position: relative;
+        }
+
+        .char-count {
+          position: static;
+          right: 20px;
+          bottom: 10px;
+          font-size: 0.8em;
+        }
+
+      `;
+
+      document.head.appendChild(styleElement);
     </script>
   </body>
 </html>
