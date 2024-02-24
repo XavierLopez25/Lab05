@@ -434,6 +434,19 @@
           document.body.classList.toggle("dark-mode");
         }
       }
+
+      input.addEventListener("input", function () {
+        const remaining = 140 - this.value.length;
+        charCount.textContent = remaining;
+
+        if (remaining === 0) {
+          charCount.style.color = "red";
+        } else {
+          charCount.style.color = "black";
+        }
+      });
+
+      applyDarkModePreference();
     </script>
   </body>
 </html>
